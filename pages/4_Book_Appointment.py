@@ -104,13 +104,14 @@ def convert_24h_to_12h(time_24: str) -> str:
 # PAGE HEADER
 # ===========================================================================
 
-st.markdown("""
-    <h1>📅 Book an Appointment</h1>
-    <p style='color:#9a9a9a; font-size:1.05rem; margin-bottom:1.5rem;'>
-        Fill in your details below to reserve your spot. All fields are required.
-    </p>
-    <hr class="gold-divider">
-""", unsafe_allow_html=True)
+st.markdown(
+    '<h1>📅 Book an Appointment</h1>'
+    '<p style="color:#9a9a9a; font-size:1.05rem; margin-bottom:1.5rem;">'
+    'Fill in your details below to reserve your spot. All fields are required.'
+    '</p>'
+    '<hr class="gold-divider">',
+    unsafe_allow_html=True
+)
 
 
 # ===========================================================================

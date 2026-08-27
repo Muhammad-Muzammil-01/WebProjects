@@ -40,14 +40,14 @@ load_css()
 # PAGE HEADER
 # ===========================================================================
 
-st.markdown("""
-    <h1>👥 Meet Our Team</h1>
-    <p style='color:#9a9a9a; font-size:1.05rem; margin-bottom:2rem;'>
-        Every barber at The Sharp Edge brings passion, precision, and personality.
-        Find your perfect match and book with them directly.
-    </p>
-    <hr class="gold-divider">
-""", unsafe_allow_html=True)
+st.markdown(
+    '<h1>👥 Meet Our Team</h1>'
+    '<p style="color:#9a9a9a; font-size:1.05rem; margin-bottom:2rem;">'
+    'Every barber at The Sharp Edge brings passion, precision, and personality. Find your perfect match and book with them directly.'
+    '</p>'
+    '<hr class="gold-divider">',
+    unsafe_allow_html=True
+)
 
 
 # ===========================================================================
@@ -143,16 +143,16 @@ with s3:
 
 st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
 
-st.markdown("""
-    <div class="info-card" style="text-align:center;">
-        <div style="font-size:2rem; margin-bottom:0.8rem;">🤝</div>
-        <div class="info-card-title">Interested in Joining Our Team?</div>
-        <p style="color:#9a9a9a; font-size:0.95rem; max-width:500px; margin:0 auto;">
-            We're always looking for passionate, skilled barbers to grow with us.
-            Reach out via our Contact page and let's talk.
-        </p>
-    </div>
-""", unsafe_allow_html=True)
+st.markdown(
+    '<div class="info-card" style="text-align:center;">'
+    '<div style="font-size:2rem; margin-bottom:0.8rem;">🤝</div>'
+    '<div class="info-card-title">Interested in Joining Our Team?</div>'
+    '<p style="color:#9a9a9a; font-size:0.95rem; max-width:500px; margin:0 auto;">'
+    'We\'re always looking for passionate, skilled barbers to grow with us. Reach out via our Contact page and let\'s talk.'
+    '</p>'
+    '</div>',
+    unsafe_allow_html=True
+)
 
 # Link to contact page
 if st.button("✉️ Get in Touch", use_container_width=False):

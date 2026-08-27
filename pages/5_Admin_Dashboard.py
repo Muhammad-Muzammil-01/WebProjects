@@ -75,15 +75,14 @@ if not st.session_state["admin_logged_in"]:
     _, login_col, _ = st.columns([2, 3, 2])
 
     with login_col:
-        st.markdown("""
-            <div style='text-align:center; padding:3rem 0 1.5rem;'>
-                <div style='font-size:3rem;'>🔒</div>
-                <h2 style='color:#c9a84c;'>Admin Login</h2>
-                <p style='color:#9a9a9a;'>
-                    This area is restricted to shop staff only.
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div style="text-align:center; padding:3rem 0 1.5rem;">'
+            '<div style="font-size:3rem;">🔒</div>'
+            '<h2 style="color:#c9a84c;">Admin Login</h2>'
+            '<p style="color:#9a9a9a;">This area is restricted to shop staff only.</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
 
         # Password input: type="password" masks characters as user types
         # The value is NOT stored in session_state automatically — we read it here

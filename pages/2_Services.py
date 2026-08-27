@@ -39,14 +39,14 @@ load_css()
 # PAGE HEADER
 # ===========================================================================
 
-st.markdown("""
-    <h1>💈 Our Services</h1>
-    <p style='color:#9a9a9a; font-size:1.05rem; margin-bottom:2rem;'>
-        From classic cuts to full grooming packages — all services performed by
-        our master barbers with professional-grade products.
-    </p>
-    <hr class="gold-divider">
-""", unsafe_allow_html=True)
+st.markdown(
+    '<h1>💈 Our Services</h1>'
+    '<p style="color:#9a9a9a; font-size:1.05rem; margin-bottom:2rem;">'
+    'From classic cuts to full grooming packages — all services performed by our master barbers with professional-grade products.'
+    '</p>'
+    '<hr class="gold-divider">',
+    unsafe_allow_html=True
+)
 
 
 # ===========================================================================
@@ -125,29 +125,31 @@ st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
 promo_col, policy_col = st.columns(2)
 
 with promo_col:
-    st.markdown("""
-        <div class="info-card">
-            <div class="info-card-title">🎉 Current Promotions</div>
-            <ul style="color:#f5f5f5; padding-left:1.2rem; line-height:2;">
-                <li>First-time customers — 10% off any service</li>
-                <li>Refer a friend — get a free beard trim</li>
-                <li>Loyalty Card — 10th visit is free</li>
-            </ul>
-        </div>
-    """, unsafe_allow_html=True)
+    promo_html = (
+        '<div class="info-card">'
+        '<div class="info-card-title">🎉 Current Promotions</div>'
+        '<ul style="color:#f5f5f5; padding-left:1.2rem; line-height:2;">'
+        '<li>First-time customers — 10% off any service</li>'
+        '<li>Refer a friend — get a free beard trim</li>'
+        '<li>Loyalty Card — 10th visit is free</li>'
+        '</ul>'
+        '</div>'
+    )
+    st.markdown(promo_html, unsafe_allow_html=True)
 
 with policy_col:
-    st.markdown("""
-        <div class="info-card">
-            <div class="info-card-title">📋 Booking Policy</div>
-            <ul style="color:#f5f5f5; padding-left:1.2rem; line-height:2;">
-                <li>Please arrive 5 minutes before your appointment</li>
-                <li>Late arrivals may need to be rescheduled</li>
-                <li>Cancellations: 24-hour notice appreciated</li>
-                <li>Walk-ins welcome, subject to availability</li>
-            </ul>
-        </div>
-    """, unsafe_allow_html=True)
+    policy_html = (
+        '<div class="info-card">'
+        '<div class="info-card-title">📋 Booking Policy</div>'
+        '<ul style="color:#f5f5f5; padding-left:1.2rem; line-height:2;">'
+        '<li>Please arrive 5 minutes before your appointment</li>'
+        '<li>Late arrivals may need to be rescheduled</li>'
+        '<li>Cancellations: 24-hour notice appreciated</li>'
+        '<li>Walk-ins welcome, subject to availability</li>'
+        '</ul>'
+        '</div>'
+    )
+    st.markdown(policy_html, unsafe_allow_html=True)
 
 
 # ===========================================================================
@@ -160,16 +162,13 @@ st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
 _, center_col, _ = st.columns([2, 3, 2])   # side columns are spacers
 
 with center_col:
-    st.markdown("""
-        <div style="text-align:center; padding:1.5rem;">
-            <h3 style="color:#f5f5f5 !important; margin-bottom:0.5rem;">
-                Ready to book?
-            </h3>
-            <p style="color:#9a9a9a; margin-bottom:1.5rem;">
-                Choose your service, pick your barber, and lock in your time slot.
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
+    cta_html = (
+        '<div style="text-align:center; padding:1.5rem;">'
+        '<h3 style="color:#f5f5f5 !important; margin-bottom:0.5rem;">Ready to book?</h3>'
+        '<p style="color:#9a9a9a; margin-bottom:1.5rem;">Choose your service, pick your barber, and lock in your time slot.</p>'
+        '</div>'
+    )
+    st.markdown(cta_html, unsafe_allow_html=True)
 
     # Native Streamlit button — navigates to the booking page
     if st.button("📅 Book an Appointment", use_container_width=True):
