@@ -1,0 +1,433 @@
+/* =============================================================================
+   style.css — Custom CSS for The Sharp Edge Barber Shop
+   =============================================================================
+   This file is loaded into Streamlit via st.markdown(f"<style>{css}</style>",
+   unsafe_allow_html=True) in app.py, so it applies globally to every page.
+
+   Design language:
+     - Dark barbershop palette: near-black (#0d0d0d), gold accent (#c9a84c)
+     - Clean white text on dark for maximum contrast
+     - Google Font "Playfair Display" for headings (serif, upscale feel)
+     - "Inter" for body text (modern, highly readable sans-serif)
+   ============================================================================= */
+
+/* ── Google Fonts import ────────────────────────────────────────────────────── */
+/* Playfair Display: elegant serif for shop name and section titles */
+/* Inter: clean sans-serif for body text */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap');
+
+/* ── CSS custom properties (variables) ─────────────────────────────────────── */
+/* Defining colors and fonts as variables means we only need to change one      */
+/* line if we rebrand — great talking point about maintainability.              */
+:root {
+    --color-bg:         #0d0d0d;    /* near-black page background */
+    --color-surface:    #1a1a1a;    /* slightly lighter card/panel background */
+    --color-border:     #2e2e2e;    /* subtle border color */
+    --color-gold:       #c9a84c;    /* main accent — warm antique gold */
+    --color-gold-light: #e8c97a;    /* lighter gold for hover states */
+    --color-white:      #f5f5f5;    /* off-white for primary text */
+    --color-muted:      #9a9a9a;    /* muted grey for secondary text */
+    --font-heading:     'Playfair Display', serif;
+    --font-body:        'Inter', sans-serif;
+    --radius:           10px;       /* consistent border-radius across components */
+    --transition:       0.25s ease; /* standard hover transition speed */
+}
+
+/* ── Base overrides ─────────────────────────────────────────────────────────── */
+/* Streamlit renders inside an iframe-like container; these selectors reach     */
+/* the main content area and sidebar.                                           */
+
+/* Main page background */
+.stApp {
+    background-color: var(--color-bg) !important;
+    font-family: var(--font-body);
+    color: var(--color-white);
+}
+
+/* Sidebar background */
+section[data-testid="stSidebar"] {
+    background-color: #111111 !important;
+    border-right: 1px solid var(--color-border);
+}
+
+/* Sidebar text */
+section[data-testid="stSidebar"] * {
+    color: var(--color-white) !important;
+    font-family: var(--font-body);
+}
+
+/* Remove Streamlit's default top padding */
+.block-container {
+    padding-top: 1.5rem !important;
+    padding-bottom: 3rem !important;
+}
+
+/* ── Typography ─────────────────────────────────────────────────────────────── */
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    color: var(--color-gold) !important;
+    letter-spacing: 0.03em;
+}
+
+h1 { font-size: 2.6rem; }
+h2 { font-size: 2rem;   }
+h3 { font-size: 1.4rem; }
+
+p, li {
+    color: var(--color-white);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+/* Muted / secondary text helper class */
+.muted {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+/* ── Hero Section ───────────────────────────────────────────────────────────── */
+/* The big banner on the Home page                                               */
+
+.hero-section {
+    background: linear-gradient(135deg, #1a1008 0%, #0d0d0d 60%, #1a1008 100%);
+    border: 1px solid var(--color-gold);
+    border-radius: var(--radius);
+    padding: 4rem 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative gold top bar on the hero */
+.hero-section::before {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--color-gold);
+    margin: 0 auto 1.5rem;
+    border-radius: 2px;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    color: var(--color-gold) !important;
+    margin: 0 0 0.5rem;
+    text-shadow: 0 2px 20px rgba(201, 168, 76, 0.3);
+}
+
+.hero-tagline {
+    font-size: 1.3rem;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+/* Gold CTA button */
+.cta-button {
+    display: inline-block;
+    background: var(--color-gold);
+    color: #0d0d0d !important;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.75rem 2.5rem;
+    border-radius: 50px;        /* pill shape */
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background var(--transition), transform var(--transition);
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background: var(--color-gold-light);
+    transform: translateY(-2px);    /* subtle lift on hover */
+}
+
+/* ── Info Cards (hours / location) ─────────────────────────────────────────── */
+
+.info-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-gold);   /* gold accent on top edge */
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    margin-bottom: 1.2rem;
+    transition: border-color var(--transition), transform var(--transition);
+}
+
+.info-card:hover {
+    border-color: var(--color-gold);
+    transform: translateY(-3px);
+}
+
+.info-card-title {
+    font-family: var(--font-heading);
+    color: var(--color-gold) !important;
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+}
+
+/* ── Service Cards ──────────────────────────────────────────────────────────── */
+
+.service-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: border-color var(--transition), transform var(--transition);
+}
+
+.service-card:hover {
+    border-color: var(--color-gold);
+    transform: translateX(4px);   /* slide right on hover — horizontal feel */
+}
+
+.service-name {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--color-white);
+}
+
+.service-desc {
+    color: var(--color-muted);
+    font-size: 0.88rem;
+    margin-top: 0.3rem;
+}
+
+.service-meta {
+    text-align: right;
+    min-width: 90px;
+}
+
+.service-price {
+    font-family: var(--font-heading);
+    color: var(--color-gold);
+    font-size: 1.3rem;
+}
+
+.service-duration {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 0.2rem;
+}
+
+/* ── Barber Cards ───────────────────────────────────────────────────────────── */
+
+.barber-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: border-color var(--transition), transform var(--transition);
+}
+
+.barber-card:hover {
+    border-color: var(--color-gold);
+    transform: translateY(-5px);
+}
+
+/* Circular avatar container */
+.barber-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid var(--color-gold);
+    margin: 0 auto 1.2rem;
+    overflow: hidden;
+    background-color: #2a2a2a;
+}
+
+.barber-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.barber-name {
+    font-family: var(--font-heading);
+    color: var(--color-gold) !important;
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.barber-specialty {
+    color: var(--color-muted);
+    font-size: 0.88rem;
+    font-style: italic;
+    margin-bottom: 0.6rem;
+}
+
+.barber-bio {
+    color: var(--color-white);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Specialty badge pill */
+.specialty-badge {
+    display: inline-block;
+    background: rgba(201, 168, 76, 0.15);
+    border: 1px solid var(--color-gold);
+    color: var(--color-gold);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+}
+
+/* ── Success / Alert Boxes ──────────────────────────────────────────────────── */
+
+.success-box {
+    background: rgba(40, 167, 69, 0.12);
+    border: 1px solid #28a745;
+    border-radius: var(--radius);
+    padding: 1.5rem 2rem;
+    margin-top: 1.5rem;
+}
+
+.success-box h3 {
+    color: #28a745 !important;
+    margin-bottom: 0.8rem;
+}
+
+/* ── Booking Summary Card ───────────────────────────────────────────────────── */
+
+.booking-summary {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-gold);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.booking-summary p {
+    margin: 0.3rem 0;
+    font-size: 0.95rem;
+}
+
+.booking-summary span.label {
+    color: var(--color-gold);
+    font-weight: 600;
+    display: inline-block;
+    width: 110px;
+}
+
+/* ── Admin Dashboard ────────────────────────────────────────────────────────── */
+
+.admin-header {
+    background: linear-gradient(90deg, #1a1008, #0d0d0d);
+    border-left: 4px solid var(--color-gold);
+    padding: 1rem 1.5rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-bottom: 1.5rem;
+}
+
+/* Style Streamlit's built-in dataframe table */
+.stDataFrame {
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius) !important;
+}
+
+/* ── Contact Page ───────────────────────────────────────────────────────────── */
+
+.contact-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    margin-bottom: 1rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+}
+
+.contact-icon {
+    font-size: 1.3rem;   /* emoji icons, no icon library needed */
+}
+
+/* ── Streamlit Widget Overrides ─────────────────────────────────────────────── */
+/* Streamlit renders form widgets in light-mode by default; these overrides     */
+/* push them toward our dark theme. Not all selectors work in every Streamlit   */
+/* version — this covers the most common ones.                                  */
+
+/* Input fields */
+.stTextInput > div > div > input,
+.stTextArea > div > div > textarea,
+.stSelectbox > div > div > div,
+.stDateInput > div > div > input,
+.stTimeInput > div > div > input {
+    background-color: #1e1e1e !important;
+    border: 1px solid var(--color-border) !important;
+    color: var(--color-white) !important;
+    border-radius: 6px !important;
+}
+
+/* Focus glow on inputs */
+.stTextInput > div > div > input:focus,
+.stTextArea > div > div > textarea:focus {
+    border-color: var(--color-gold) !important;
+    box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.25) !important;
+    outline: none !important;
+}
+
+/* Primary buttons (st.button) */
+.stButton > button[kind="primary"],
+.stButton > button {
+    background-color: var(--color-gold) !important;
+    color: #0d0d0d !important;
+    border: none !important;
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    padding: 0.55rem 1.8rem !important;
+    font-family: var(--font-body) !important;
+    transition: background var(--transition) !important;
+}
+
+.stButton > button:hover {
+    background-color: var(--color-gold-light) !important;
+}
+
+/* Metric boxes in admin dashboard */
+.stMetric {
+    background-color: var(--color-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius) !important;
+    padding: 1rem !important;
+}
+
+/* ── Divider ────────────────────────────────────────────────────────────────── */
+
+.gold-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-gold), transparent);
+    margin: 2rem 0;
+}
+
+/* ── Scrollbar (Chrome/Edge) ────────────────────────────────────────────────── */
+/* Small cosmetic touch — makes the scrollbar match the dark theme               */
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-gold); }
