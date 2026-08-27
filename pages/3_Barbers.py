@@ -80,28 +80,16 @@ for row_start in range(0, len(BARBERS), COLS_PER_ROW):
     for col, barber in zip(cols, row_barbers):
         with col:
             # Build the barber card HTML using the barber dict values
-            card_html = f"""
-                <div class="barber-card">
-
-                    <!-- Avatar image in a circular frame -->
-                    <div class="barber-avatar">
-                        <img src="{barber['image_url']}"
-                             alt="Photo of {barber['name']}"
-                             loading="lazy">
-                        <!-- loading="lazy" defers image load until visible -->
-                    </div>
-
-                    <!-- Barber name -->
-                    <div class="barber-name">{barber['name']}</div>
-
-                    <!-- Specialty badge (gold pill) -->
-                    <div class="specialty-badge">{barber['specialty']}</div>
-
-                    <!-- Short bio paragraph -->
-                    <p class="barber-bio">{barber['bio']}</p>
-
-                </div>
-            """
+            card_html = (
+                '<div class="barber-card">'
+                '<div class="barber-avatar">'
+                f'<img src="{barber["image_url"]}" alt="Photo of {barber["name"]}" loading="lazy">'
+                '</div>'
+                f'<div class="barber-name">{barber["name"]}</div>'
+                f'<div class="specialty-badge">{barber["specialty"]}</div>'
+                f'<p class="barber-bio">{barber["bio"]}</p>'
+                '</div>'
+            )
             st.markdown(card_html, unsafe_allow_html=True)
 
             # Native Streamlit button below each card

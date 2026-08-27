@@ -98,77 +98,47 @@ col1, col2 = st.columns(2)    # unpack into two column objects
 # ---- LEFT COLUMN: Opening Hours ----------------------------------------
 
 with col1:
-    # Card header
-    st.markdown("""
-        <div class="info-card">
-            <div class="info-card-title">🕐 Opening Hours</div>
-    """, unsafe_allow_html=True)
-
-    # Build rows for the hours table by looping over SHOP_INFO["hours"]
-    # Each entry is a tuple: (day_label, hours_string)
-    hours_rows = ""   # will accumulate HTML table rows
-
-    for day, hours in SHOP_INFO["hours"]:
-        # Each <tr> is a table row; day on left, hours on right
-        hours_rows += f"""
-            <tr>
-                <td style="padding:0.4rem 1rem 0.4rem 0;
-                           color:#9a9a9a; font-size:0.92rem;">{day}</td>
-                <td style="padding:0.4rem 0; color:#f5f5f5;
-                           font-size:0.92rem; font-weight:600;">{hours}</td>
-            </tr>
-        """
-
-    # Wrap all rows in a proper <table> element
-    hours_table_html = f"""
-        <table style="border-collapse:collapse; width:100%;">
-            <tbody>
-                {hours_rows}
-            </tbody>
-        </table>
-        </div>  <!-- close .info-card -->
-    """
-    st.markdown(hours_table_html, unsafe_allow_html=True)
+    hours_rows = "".join([
+        f'<tr><td style="padding:0.4rem 1rem 0.4rem 0; color:#9a9a9a; font-size:0.92rem;">{day}</td>'
+        f'<td style="padding:0.4rem 0; color:#f5f5f5; font-size:0.92rem; font-weight:600;">{hours}</td></tr>'
+        for day, hours in SHOP_INFO["hours"]
+    ])
+    hours_card_html = (
+        '<div class="info-card">'
+        '<div class="info-card-title">🕐 Opening Hours</div>'
+        '<table style="border-collapse:collapse; width:100%;">'
+        f'<tbody>{hours_rows}</tbody>'
+        '</table>'
+        '</div>'
+    )
+    st.markdown(hours_card_html, unsafe_allow_html=True)
 
 
 # ---- RIGHT COLUMN: Location & Contact ----------------------------------
 
 with col2:
-    # Location info card using our custom CSS class
-    location_html = f"""
-        <div class="info-card">
-            <div class="info-card-title">📍 Find Us</div>
-
-            <!-- Address with icon -->
-            <div class="contact-item">
-                <span class="contact-icon">🗺️</span>
-                <span>{SHOP_INFO['address']}</span>
-            </div>
-
-            <!-- Phone number -->
-            <div class="contact-item">
-                <span class="contact-icon">📞</span>
-                <span>{SHOP_INFO['phone']}</span>
-            </div>
-
-            <!-- Email -->
-            <div class="contact-item">
-                <span class="contact-icon">✉️</span>
-                <span>{SHOP_INFO['email']}</span>
-            </div>
-
-            <!-- Divider -->
-            <hr style="border-color:#2e2e2e; margin:1rem 0;">
-
-            <!-- Parking note — static helpful info -->
-            <div class="contact-item">
-                <span class="contact-icon">🅿️</span>
-                <span style="color:#9a9a9a; font-size:0.9rem;">
-                    Street parking available. Nearest subway: Jay St–MetroTech (A/C/F)
-                </span>
-            </div>
-        </div>
-    """
+    location_html = (
+        '<div class="info-card">'
+        '<div class="info-card-title">📍 Find Us</div>'
+        '<div class="contact-item">'
+        '<span class="contact-icon">🗺️</span>'
+        f'<span>{SHOP_INFO["address"]}</span>'
+        '</div>'
+        '<div class="contact-item">'
+        '<span class="contact-icon">📞</span>'
+        f'<span>{SHOP_INFO["phone"]}</span>'
+        '</div>'
+        '<div class="contact-item">'
+        '<span class="contact-icon">✉️</span>'
+        f'<span>{SHOP_INFO["email"]}</span>'
+        '</div>'
+        '<hr style="border-color:#2e2e2e; margin:1rem 0;">'
+        '<div class="contact-item">'
+        '<span class="contact-icon">🅿️</span>'
+        '<span style="color:#9a9a9a; font-size:0.9rem;">Street parking available. Nearest subway: Jay St–MetroTech (A/C/F)</span>'
+        '</div>'
+        '</div>'
+    )
     st.markdown(location_html, unsafe_allow_html=True)
 
 

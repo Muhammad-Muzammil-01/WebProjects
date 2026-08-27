@@ -69,22 +69,18 @@ for i, service in enumerate(SERVICES):
     price_display = f"${service['price']:.2f}"
 
     # Build the service card HTML using the service dict's values
-    card_html = f"""
-        <div class="service-card">
-            <!-- Left side: service name and description -->
-            <div style="flex:1;">
-                <div class="service-name">✂️ {service['name']}</div>
-                <div class="service-desc">{service['description']}</div>
-            </div>
-
-            <!-- Right side: price and duration -->
-            <div class="service-meta">
-                <div class="service-price">{price_display}</div>
-                <span class="service-duration">⏱ {service['duration']}</span>
-            </div>
-        </div>
-    """
-    # Each card is its own markdown block — Streamlit renders them sequentially
+    card_html = (
+        '<div class="service-card">'
+        '<div style="flex:1;">'
+        f'<div class="service-name">✂️ {service["name"]}</div>'
+        f'<div class="service-desc">{service["description"]}</div>'
+        '</div>'
+        '<div class="service-meta">'
+        f'<div class="service-price">{price_display}</div>'
+        f'<span class="service-duration">⏱ {service["duration"]}</span>'
+        '</div>'
+        '</div>'
+    )
     st.markdown(card_html, unsafe_allow_html=True)
 
 

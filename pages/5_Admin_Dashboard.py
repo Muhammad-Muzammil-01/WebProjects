@@ -119,14 +119,13 @@ if not st.session_state["admin_logged_in"]:
 col_title, col_logout = st.columns([5, 1])
 
 with col_title:
-    st.markdown("""
-        <div class="admin-header">
-            <h1 style="margin:0; font-size:1.8rem;">🔒 Admin Dashboard</h1>
-            <p style="color:#9a9a9a; margin:0.3rem 0 0; font-size:0.9rem;">
-                The Sharp Edge Barber Shop — Booking Management
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        '<div class="admin-header">'
+        '<h1 style="margin:0; font-size:1.8rem;">🔒 Admin Dashboard</h1>'
+        '<p style="color:#9a9a9a; margin:0.3rem 0 0; font-size:0.9rem;">The Sharp Edge Barber Shop — Booking Management</p>'
+        '</div>',
+        unsafe_allow_html=True
+    )
 
 with col_logout:
     st.markdown("<br>", unsafe_allow_html=True)   # push button down

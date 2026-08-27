@@ -47,10 +47,21 @@ section[data-testid="stSidebar"] {
     border-right: 1px solid var(--color-border);
 }
 
-/* Sidebar text */
-section[data-testid="stSidebar"] * {
-    color: var(--color-white) !important;
-    font-family: var(--font-body);
+/* Sidebar text styling without breaking Streamlit icons */
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] a {
+    color: var(--color-white);
+}
+
+/* Preserve all Streamlit icon glyphs */
+span[data-testid="stIconMaterial"],
+i[class*="material-icons"],
+span[class*="material-symbols"],
+.material-symbols-rounded,
+.material-symbols-outlined,
+button[data-testid="stSidebarCollapseButton"] span,
+button[data-testid="stSidebarCollapseButton"] {
+    font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons", sans-serif !important;
 }
 
 /* Remove Streamlit's default top padding */

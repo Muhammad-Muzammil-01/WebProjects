@@ -112,56 +112,44 @@ st.markdown("<br>", unsafe_allow_html=True)
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("""
-        <div class="info-card">
-            <div class="info-card-title">🕐 Opening Hours</div>
-    """, unsafe_allow_html=True)
-
-    hours_rows = ""
-    for day, hours in SHOP_INFO["hours"]:
-        hours_rows += f"""
-            <tr>
-                <td style="padding:0.4rem 1rem 0.4rem 0; color:#9a9a9a; font-size:0.92rem;">{day}</td>
-                <td style="padding:0.4rem 0; color:#f5f5f5; font-size:0.92rem; font-weight:600;">{hours}</td>
-            </tr>
-        """
-
-    hours_table_html = f"""
-        <table style="border-collapse:collapse; width:100%;">
-            <tbody>
-                {hours_rows}
-            </tbody>
-        </table>
-        </div>
-    """
-    st.markdown(hours_table_html, unsafe_allow_html=True)
-
+    hours_rows = "".join([
+        f'<tr><td style="padding:0.4rem 1rem 0.4rem 0; color:#9a9a9a; font-size:0.92rem;">{day}</td>'
+        f'<td style="padding:0.4rem 0; color:#f5f5f5; font-size:0.92rem; font-weight:600;">{hours}</td></tr>'
+        for day, hours in SHOP_INFO["hours"]
+    ])
+    hours_card_html = (
+        '<div class="info-card">'
+        '<div class="info-card-title">🕐 Opening Hours</div>'
+        '<table style="border-collapse:collapse; width:100%;">'
+        f'<tbody>{hours_rows}</tbody>'
+        '</table>'
+        '</div>'
+    )
+    st.markdown(hours_card_html, unsafe_allow_html=True)
 
 with col2:
-    location_html = f"""
-        <div class="info-card">
-            <div class="info-card-title">📍 Find Us</div>
-            <div class="contact-item">
-                <span class="contact-icon">🗺️</span>
-                <span>{SHOP_INFO['address']}</span>
-            </div>
-            <div class="contact-item">
-                <span class="contact-icon">📞</span>
-                <span>{SHOP_INFO['phone']}</span>
-            </div>
-            <div class="contact-item">
-                <span class="contact-icon">✉️</span>
-                <span>{SHOP_INFO['email']}</span>
-            </div>
-            <hr style="border-color:#2e2e2e; margin:1rem 0;">
-            <div class="contact-item">
-                <span class="contact-icon">🅿️</span>
-                <span style="color:#9a9a9a; font-size:0.9rem;">
-                    Street parking available. Nearest subway: Jay St–MetroTech (A/C/F)
-                </span>
-            </div>
-        </div>
-    """
+    location_html = (
+        '<div class="info-card">'
+        '<div class="info-card-title">📍 Find Us</div>'
+        '<div class="contact-item">'
+        '<span class="contact-icon">🗺️</span>'
+        f'<span>{SHOP_INFO["address"]}</span>'
+        '</div>'
+        '<div class="contact-item">'
+        '<span class="contact-icon">📞</span>'
+        f'<span>{SHOP_INFO["phone"]}</span>'
+        '</div>'
+        '<div class="contact-item">'
+        '<span class="contact-icon">✉️</span>'
+        f'<span>{SHOP_INFO["email"]}</span>'
+        '</div>'
+        '<hr style="border-color:#2e2e2e; margin:1rem 0;">'
+        '<div class="contact-item">'
+        '<span class="contact-icon">🅿️</span>'
+        '<span style="color:#9a9a9a; font-size:0.9rem;">Street parking available. Nearest subway: Jay St–MetroTech (A/C/F)</span>'
+        '</div>'
+        '</div>'
+    )
     st.markdown(location_html, unsafe_allow_html=True)
 
 

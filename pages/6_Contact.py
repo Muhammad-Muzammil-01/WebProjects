@@ -96,19 +96,11 @@ with info_col:
     st.markdown(contact_info_html, unsafe_allow_html=True)
 
     # Opening hours summary card
-    st.markdown("<h3>🕐 Opening Hours</h3>", unsafe_allow_html=True)
-
-    hours_html = '<div class="contact-card">'   # open the card div
-    for day, hours in SHOP_INFO["hours"]:
-        # Each hour entry as a flex row with day and time on opposite ends
-        hours_html += f"""
-            <div style="display:flex; justify-content:space-between;
-                        padding:0.4rem 0; border-bottom:1px solid #2e2e2e;">
-                <span style="color:#9a9a9a;">{day}</span>
-                <span style="color:#f5f5f5; font-weight:600;">{hours}</span>
-            </div>
-        """
-    hours_html += "</div>"   # close the card div
+    hours_items = "".join([
+        f'<div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #2e2e2e;"><span style="color:#9a9a9a;">{day}</span><span style="color:#f5f5f5; font-weight:600;">{hours}</span></div>'
+        for day, hours in SHOP_INFO["hours"]
+    ])
+    hours_html = f'<div class="contact-card"><div class="info-card-title">🕐 Opening Hours</div>{hours_items}</div>'
     st.markdown(hours_html, unsafe_allow_html=True)
 
     # Social media / other links (static, no real links needed for demo)

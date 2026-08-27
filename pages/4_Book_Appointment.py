@@ -141,24 +141,22 @@ if st.session_state["last_booking"] is not None:
     booking = st.session_state["last_booking"]   # retrieve the saved booking dict
 
     # Build the confirmation HTML using the stored booking data
-    success_html = f"""
-        <div class="success-box">
-            <h3>✅ Booking Confirmed!</h3>
-            <p style="color:#9a9a9a; margin-bottom:1rem;">
-                We'll see you at The Sharp Edge. Here's your booking summary:
-            </p>
-        </div>
-        <div class="booking-summary">
-            <p><span class="label">Ref #:</span>       {booking['id']}</p>
-            <p><span class="label">Name:</span>        {booking['name']}</p>
-            <p><span class="label">Service:</span>     {booking['service']}</p>
-            <p><span class="label">Barber:</span>      {booking['barber']}</p>
-            <p><span class="label">Date:</span>        {booking['appt_date']}</p>
-            <p><span class="label">Time:</span>        {convert_24h_to_12h(booking['appt_time'])}</p>
-            <p><span class="label">Phone:</span>       {booking['phone']}</p>
-            <p><span class="label">Email:</span>       {booking['email']}</p>
-        </div>
-    """
+    success_html = (
+        '<div class="success-box">'
+        '<h3>✅ Booking Confirmed!</h3>'
+        '<p style="color:#9a9a9a; margin-bottom:1rem;">We\'ll see you at The Sharp Edge. Here\'s your booking summary:</p>'
+        '</div>'
+        '<div class="booking-summary">'
+        f'<p><span class="label">Ref #:</span> {booking["id"]}</p>'
+        f'<p><span class="label">Name:</span> {booking["name"]}</p>'
+        f'<p><span class="label">Service:</span> {booking["service"]}</p>'
+        f'<p><span class="label">Barber:</span> {booking["barber"]}</p>'
+        f'<p><span class="label">Date:</span> {booking["appt_date"]}</p>'
+        f'<p><span class="label">Time:</span> {convert_24h_to_12h(booking["appt_time"])}</p>'
+        f'<p><span class="label">Phone:</span> {booking["phone"]}</p>'
+        f'<p><span class="label">Email:</span> {booking["email"]}</p>'
+        '</div>'
+    )
     st.markdown(success_html, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)   # vertical spacer
@@ -384,26 +382,24 @@ with form_col:
 # ── Tips Panel (right column) ─────────────────────────────────────────────────
 
 with tips_col:
-    st.markdown("""
-        <div class="info-card">
-            <div class="info-card-title">💡 Tips</div>
-            <ul style="color:#9a9a9a; padding-left:1.2rem;
-                       font-size:0.88rem; line-height:2;">
-                <li>Arrive 5 min early</li>
-                <li>Bring a photo for reference styles</li>
-                <li>Cancellations: 24hr notice</li>
-                <li>Walk-ins also welcome</li>
-            </ul>
-        </div>
-
-        <div class="info-card" style="margin-top:1rem;">
-            <div class="info-card-title">⏱ Durations</div>
-            <ul style="color:#9a9a9a; padding-left:1.2rem;
-                       font-size:0.88rem; line-height:2;">
-                <li>Haircut: 30 min</li>
-                <li>Beard Trim: 20 min</li>
-                <li>Hot Shave: 40 min</li>
-                <li>Combo: 50 min</li>
-            </ul>
-        </div>
-    """, unsafe_allow_html=True)
+    tips_html = (
+        '<div class="info-card">'
+        '<div class="info-card-title">💡 Tips</div>'
+        '<ul style="color:#9a9a9a; padding-left:1.2rem; font-size:0.88rem; line-height:2;">'
+        '<li>Arrive 5 min early</li>'
+        '<li>Bring a photo for reference styles</li>'
+        '<li>Cancellations: 24hr notice</li>'
+        '<li>Walk-ins also welcome</li>'
+        '</ul>'
+        '</div>'
+        '<div class="info-card" style="margin-top:1rem;">'
+        '<div class="info-card-title">⏱ Durations</div>'
+        '<ul style="color:#9a9a9a; padding-left:1.2rem; font-size:0.88rem; line-height:2;">'
+        '<li>Haircut: 30 min</li>'
+        '<li>Beard Trim: 20 min</li>'
+        '<li>Hot Shave: 40 min</li>'
+        '<li>Combo: 50 min</li>'
+        '</ul>'
+        '</div>'
+    )
+    st.markdown(tips_html, unsafe_allow_html=True)
