@@ -104,9 +104,10 @@ SHOP_INFO = {
     "email": "info@thesharpedge.com",
     # Opening hours as a list of tuples: (day label, hours string)
     "hours": [
-        ("Monday – Friday", "9:00 AM – 7:00 PM"),
-        ("Saturday",        "8:00 AM – 6:00 PM"),
-        ("Sunday",          "10:00 AM – 4:00 PM"),
+        ("Monday – Thursday", "9:00 AM – 7:00 PM"),
+        ("Friday",            "9:00 AM – 1:00 PM  |  3:00 PM – 7:00 PM (Break 1–3 PM)"),
+        ("Saturday",          "8:00 AM – 6:00 PM"),
+        ("Sunday",            "10:00 AM – 4:00 PM"),
     ],
 }
 

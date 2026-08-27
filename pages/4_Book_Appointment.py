@@ -328,6 +328,14 @@ with form_col:
         # Convert date object → string for SQLite (ISO 8601 format: YYYY-MM-DD)
         date_str = selected_date.strftime("%Y-%m-%d")
 
+        # ── Friday midday break validation (closed 1:00 PM – 3:00 PM) ───
+        # .weekday() returns 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri, 5=Sat, 6=Sun
+        if selected_date.weekday() == 4 and selected_time_24h in ["13:00", "13:30", "14:00", "14:30"]:
+            errors.append(
+                "The shop is closed on Fridays between 1:00 PM and 3:00 PM for the midday break. "
+                "Please choose a slot before 1:00 PM or at/after 3:00 PM."
+            )
+
         # ── Double-booking check ──────────────────────────────────────────
         # ONLY do the DB query if there are no other errors yet
         # (no point querying DB if the form is already invalid)
@@ -388,6 +396,7 @@ with tips_col:
         '<ul style="color:#9a9a9a; padding-left:1.2rem; font-size:0.88rem; line-height:2;">'
         '<li>Arrive 5 min early</li>'
         '<li>Bring a photo for reference styles</li>'
+        '<li>Friday break: 1:00 – 3:00 PM</li>'
         '<li>Cancellations: 24hr notice</li>'
         '<li>Walk-ins also welcome</li>'
         '</ul>'
