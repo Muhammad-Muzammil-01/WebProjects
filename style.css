@@ -1,9 +1,6 @@
 /* =============================================================================
    style.css — Custom CSS for The Sharp Edge Barber Shop
    =============================================================================
-   This file is loaded into Streamlit via st.markdown(f"<style>{css}</style>",
-   unsafe_allow_html=True) in app.py, so it applies globally to every page.
-
    Design language:
      - Dark barbershop palette: near-black (#0d0d0d), gold accent (#c9a84c)
      - Clean white text on dark for maximum contrast

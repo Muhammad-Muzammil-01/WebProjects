@@ -70,21 +70,20 @@ hero_html = f"""
     <div style="font-size:2rem; margin: 1rem 0; color:#c9a84c;">✂ ✂ ✂</div>
 
     <!-- Subheading / value proposition -->
-    <p style="color:#f5f5f5; font-size:1.1rem; max-width:600px; margin:0 auto 2rem;">
+    <p style="color:#f5f5f5; font-size:1.1rem; max-width:600px; margin:0 auto 1.5rem;">
         Brooklyn's finest cuts, fades, and grooming — where tradition meets style.
         Walk in or book your appointment below.
     </p>
-
-    <!-- CTA button: clicking navigates to the Book Appointment page -->
-    <!-- Streamlit multi-page apps use sidebar links, but we can link     -->
-    <!-- by appending ?p=4_Book_Appointment to the URL or just show text  -->
-    <a class="cta-button" href="4_Book_Appointment" target="_self">
-        📅 Book Your Appointment
-    </a>
 </div>
 """
-# unsafe_allow_html=True is required whenever we pass raw HTML to Streamlit
 st.markdown(hero_html, unsafe_allow_html=True)
+
+_, hero_btn_col, _ = st.columns([2, 2, 2])
+with hero_btn_col:
+    if st.button("📅 Book Your Appointment", key="home_hero_btn", use_container_width=True, type="primary"):
+        st.switch_page("pages/4_Book_Appointment.py")
+
+st.markdown("<br>", unsafe_allow_html=True)
 
 
 # ===========================================================================

@@ -5,34 +5,33 @@
 #   1. Configures the Streamlit page (title, icon, layout)
 #   2. Loads and injects the global CSS stylesheet
 #   3. Initialises the database once on first run
+#   4. Renders the full Home page experience
 #
 # Navigation is handled automatically by Streamlit's multi-page app system:
 # any .py file placed in the /pages folder becomes a sidebar page.
-# The order is controlled by the numeric prefix in the filename (1_, 2_, etc.)
-#
-# Run this app with:   streamlit run app.py
 # =============================================================================
 
 import streamlit as st      # the entire app UI framework
 import os                   # for building file paths
+import sys                  # for module imports
 
-# Import our own database initialisation function
-# (database.py lives in the same folder as this file)
+# Add root folder to sys.path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+# Import database initialization and shop info
 from database import init_db
+from data import SHOP_INFO
 
 
 # ---------------------------------------------------------------------------
 # PAGE CONFIGURATION
 # ---------------------------------------------------------------------------
-# st.set_page_config MUST be the first Streamlit call in app.py
-# (Streamlit throws an error if anything else runs before it)
 st.set_page_config(
     page_title="The Sharp Edge Barber Shop",   # shown in browser tab
     page_icon="✂️",                             # emoji as the favicon
     layout="wide",                              # use full browser width
     initial_sidebar_state="expanded",           # sidebar open by default
     menu_items={
-        # These appear in the ⋮ hamburger menu top-right
         "Get Help": "https://github.com",
         "About": "The Sharp Edge Barber Shop — Portfolio project built with Streamlit & SQLite.",
     },
@@ -42,66 +41,30 @@ st.set_page_config(
 # ---------------------------------------------------------------------------
 # LOAD AND INJECT CUSTOM CSS
 # ---------------------------------------------------------------------------
-# We read style.css from disk and wrap it in a <style> tag.
-# st.markdown with unsafe_allow_html=True tells Streamlit to render raw HTML.
-# The 'unsafe' label is a warning that YOU are responsible for what's inside —
-# safe here because we're loading our own file, not user input.
 def load_css(css_file_path: str) -> None:
-    """
-    Reads a CSS file from disk and injects it as a <style> block into the page.
-
-    Parameters:
-        css_file_path (str): Absolute or relative path to the .css file.
-
-    Returns: None
-
-    Why inject CSS this way?
-        Streamlit doesn't have a native "load stylesheet" function.
-        This is the community-standard workaround. The CSS applies globally
-        to every page because app.py is executed before each page renders.
-    """
-    # Open the CSS file in read mode with UTF-8 encoding
-    with open(css_file_path, "r", encoding="utf-8") as css_file:
-        css_content = css_file.read()   # read the entire file as a string
-
-    # Wrap the CSS in a <style> tag and inject it into the Streamlit page
-    st.markdown(f"<style>{css_content}</style>", unsafe_allow_html=True)
+    """Reads a CSS file and injects it into the page."""
+    if os.path.exists(css_file_path):
+        with open(css_file_path, "r", encoding="utf-8") as css_file:
+            css_content = css_file.read()
+        st.markdown(f"<style>\n{css_content}\n</style>", unsafe_allow_html=True)
 
 
-# Build an absolute path to style.css so it works regardless of where the
-# app is launched from.
-# os.path.dirname(__file__) = directory containing app.py
-# os.path.join combines it with the filename safely
 CSS_PATH = os.path.join(os.path.dirname(__file__), "style.css")
-
-# Only inject CSS if the file actually exists (prevents cryptic errors)
-if os.path.exists(CSS_PATH):
-    load_css(CSS_PATH)
+load_css(CSS_PATH)
 
 
 # ---------------------------------------------------------------------------
 # DATABASE INITIALISATION
 # ---------------------------------------------------------------------------
-# init_db() creates the tables if they don't already exist.
-# Calling it here (in app.py) guarantees tables exist before ANY page runs.
-# We use st.session_state to make sure we only call it once per session,
-# not on every Streamlit rerun (which happens whenever the user interacts).
-
-# st.session_state is a dict-like object that persists across reruns
-# for the same browser session — like a "server-side session variable."
 if "db_initialised" not in st.session_state:
-    init_db()                           # create tables if needed
-    st.session_state["db_initialised"] = True   # set the flag so we skip next time
+    init_db()
+    st.session_state["db_initialised"] = True
 
 
 # ---------------------------------------------------------------------------
 # SIDEBAR BRANDING
 # ---------------------------------------------------------------------------
-# This renders in the sidebar on EVERY page because app.py runs on every page load.
-# Streamlit's multi-page system re-runs app.py's sidebar code each time.
-
 with st.sidebar:
-    # Shop logo / name in the sidebar header
     st.markdown("""
         <div style='text-align:center; padding: 1rem 0 0.5rem;'>
             <div style='font-size:2rem;'>✂️</div>
@@ -118,24 +81,122 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 
-# ---------------------------------------------------------------------------
-# HOME PAGE REDIRECT CONTENT
-# ---------------------------------------------------------------------------
-# When a user hits the root URL (just app.py), show a welcome message.
-# The actual Home page is pages/1_Home.py, but this gives a nice landing.
+# ===========================================================================
+# HOME PAGE CONTENT
+# ===========================================================================
 
-st.markdown("""
-    <div style='text-align:center; padding: 5rem 2rem;'>
-        <div style='font-size:4rem;'>✂️</div>
-        <h1 style='font-family:"Playfair Display",serif; color:#c9a84c;
-                   font-size:2.5rem; margin:1rem 0 0.5rem;'>
-            The Sharp Edge Barber Shop
-        </h1>
-        <p style='color:#9a9a9a; font-size:1.1rem; font-style:italic;'>
-            Look Sharp. Feel Sharp.
-        </p>
-        <p style='color:#f5f5f5; margin-top:1.5rem;'>
-            👈 Use the sidebar to navigate between pages.
-        </p>
-    </div>
-""", unsafe_allow_html=True)
+# ── HERO SECTION ──────────────────────────────────────────────────────────
+hero_html = f"""
+<div class="hero-section">
+    <h1 class="hero-title">{SHOP_INFO['name']}</h1>
+    <p class="hero-tagline">"{SHOP_INFO['tagline']}"</p>
+    <div style="font-size:2rem; margin: 1rem 0; color:#c9a84c;">✂ ✂ ✂</div>
+    <p style="color:#f5f5f5; font-size:1.1rem; max-width:600px; margin:0 auto 2rem;">
+        Brooklyn's finest cuts, fades, and grooming — where tradition meets style.
+        Walk in or book your appointment below.
+    </p>
+</div>
+"""
+st.markdown(hero_html, unsafe_allow_html=True)
+
+# ── DIRECT BOOK BUTTON UNDER HERO ─────────────────────────────────────────
+_, hero_btn_col, _ = st.columns([2, 2, 2])
+with hero_btn_col:
+    if st.button("📅 Book Your Appointment", key="hero_book_btn", use_container_width=True, type="primary"):
+        st.switch_page("pages/4_Book_Appointment.py")
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+
+# ── INFO COLUMNS: Hours & Location ────────────────────────────────────────
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("""
+        <div class="info-card">
+            <div class="info-card-title">🕐 Opening Hours</div>
+    """, unsafe_allow_html=True)
+
+    hours_rows = ""
+    for day, hours in SHOP_INFO["hours"]:
+        hours_rows += f"""
+            <tr>
+                <td style="padding:0.4rem 1rem 0.4rem 0; color:#9a9a9a; font-size:0.92rem;">{day}</td>
+                <td style="padding:0.4rem 0; color:#f5f5f5; font-size:0.92rem; font-weight:600;">{hours}</td>
+            </tr>
+        """
+
+    hours_table_html = f"""
+        <table style="border-collapse:collapse; width:100%;">
+            <tbody>
+                {hours_rows}
+            </tbody>
+        </table>
+        </div>
+    """
+    st.markdown(hours_table_html, unsafe_allow_html=True)
+
+
+with col2:
+    location_html = f"""
+        <div class="info-card">
+            <div class="info-card-title">📍 Find Us</div>
+            <div class="contact-item">
+                <span class="contact-icon">🗺️</span>
+                <span>{SHOP_INFO['address']}</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📞</span>
+                <span>{SHOP_INFO['phone']}</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">✉️</span>
+                <span>{SHOP_INFO['email']}</span>
+            </div>
+            <hr style="border-color:#2e2e2e; margin:1rem 0;">
+            <div class="contact-item">
+                <span class="contact-icon">🅿️</span>
+                <span style="color:#9a9a9a; font-size:0.9rem;">
+                    Street parking available. Nearest subway: Jay St–MetroTech (A/C/F)
+                </span>
+            </div>
+        </div>
+    """
+    st.markdown(location_html, unsafe_allow_html=True)
+
+
+# ── VALUE PROPOSITIONS ───────────────────────────────────────────────────
+st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center;'>Why Choose The Sharp Edge?</h2>", unsafe_allow_html=True)
+
+feat1, feat2, feat3 = st.columns(3)
+features = [
+    ("✂️", "Master Barbers", "Our barbers each bring 7–15 years of professional experience. Precision in every cut."),
+    ("⭐", "Premium Products", "We only use top-shelf grooming products — Proraso, American Crew, and more."),
+    ("📅", "Easy Booking", "Book online in under 60 seconds. No phone tag. No waiting. Just show up looking great."),
+]
+
+for col, (icon, title, desc) in zip([feat1, feat2, feat3], features):
+    with col:
+        st.markdown(f"""
+            <div class="info-card" style="text-align:center;">
+                <div style="font-size:2.5rem; margin-bottom:0.8rem;">{icon}</div>
+                <div class="info-card-title">{title}</div>
+                <p style="color:#9a9a9a; font-size:0.9rem; margin:0;">{desc}</p>
+            </div>
+        """, unsafe_allow_html=True)
+
+
+# ── BOTTOM CTA ───────────────────────────────────────────────────────────
+st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
+
+cta_left, cta_right = st.columns([3, 1])
+with cta_left:
+    st.markdown("""
+        <h3 style="margin:0; color:#f5f5f5 !important;">Ready for your next great look?</h3>
+        <p style="color:#9a9a9a; margin:0.4rem 0 0;">Book your appointment online — available 24/7.</p>
+    """, unsafe_allow_html=True)
+
+with cta_right:
+    if st.button("📅 Book Now", key="bottom_book_btn", use_container_width=True):
+        st.switch_page("pages/4_Book_Appointment.py")
